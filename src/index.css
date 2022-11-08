@@ -15,3 +15,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.modal-box {
+  animation-name: show;
+  animation-duration: 0.8s;
+}
+
+@keyframes show {
+  from {
+    transform: translate(0, -200%)
+  }  
+}
