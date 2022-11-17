@@ -81,14 +81,14 @@ function App() {
     
   return (
     <>
-      <div className="text-center flex flex-col bg-b-main w-1/2 mx-auto p-10 mt-24 rounded-xl">
+      <div className="text-center flex flex-col bg-b-main w-11/12 lg:w-1/2 mx-auto p-2 lg:p-10 mt-24 rounded-xl relative">
         <header className="mb-14">
           <img src={logo} className="animate-spin-slow w-28 mx-auto" alt="logo" />        
           <h1 className="text-4xl font-bold text-blue-500">
             React Todo App
           </h1>
         </header>
-        <main className='w-96 mx-auto'>
+        <main className='w-full lg:w-96 mx-auto'>
             <TodoInput addItem={addItem} />
             <div className='space-y-3'>
               {todos.map(data => {
