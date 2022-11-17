@@ -8,8 +8,10 @@ export default function TodoInput({addItem}) {
     }
 
     const submit = () => {
-        addItem(item)
-        setItem('')        
+        if (item !== '') {
+            addItem(item)
+            setItem('')                
+        }        
     }
 
     return (

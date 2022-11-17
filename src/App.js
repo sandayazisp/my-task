@@ -2,25 +2,20 @@ import logo from './logo.svg';
 import './App.css';
 import TodoInput from './components/TodoInput';
 import TodoItem from './components/TodoItem';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EditModal from './components/EditModal';
 import KonfirmasiModal from './components/KonfirmasiModal';
 
-function App() {
-  const [todos, setData] = useState([
-    {
-      id: 1,
-      title: 'hai'
-    },
-    {
-      id: 2,
-      title: 'hai juga'
-    },
-    {
-      id: 3,
-      title: 'lagi apa'
-    },
-  ])
+function App() { 
+  
+  const [todos, setData] = useState(() => {
+    const saveTodos = localStorage.getItem('todo')
+    if (saveTodos) {
+      return JSON.parse(saveTodos)
+    }else{
+      return []
+    }
+  })
 
   const [modal, setModal] =  useState(false)
   const [konfirModal, setKonfirModal] = useState(false)
@@ -29,18 +24,22 @@ function App() {
     title: ''
   })
 
+  useEffect(() => {
+    localStorage.setItem('todo', JSON.stringify(todos));
+  },[todos]);  
+
   const deleteItem = id => {
     const item = todos.filter(item => item.id !== id);    
     setData(item)
   }
 
   const addItem = (data) => {
-    const id = todos.length;    
+    const id = todos.length;        
     const newData = {
       id: id+1,
       title: data
     }
-    setData([...todos, newData])
+    setData([...todos, newData])    
   }
 
   const setTitle = e => {
@@ -53,14 +52,15 @@ function App() {
       id,
       title
     })
+    // console.log(editTodos);
   }  
 
   const updateTodos = () => {
     const {id, title} = editTodos
     const newData = {id, title}    
     const newTodos = todos    
-    newTodos.splice((id-1), 1, newData)    
-    setData(newTodos)
+    newTodos.splice((id-1), 1, newData)  
+    localStorage.setItem('todo', JSON.stringify(newTodos));    
     setModal(false)
     setKonfirModal(false)
     setEditTodos({
@@ -78,6 +78,7 @@ function App() {
     setModal(false)
     setKonfirModal(true)
   }
+    
   return (
     <>
       <div className="text-center flex flex-col bg-b-main w-1/2 mx-auto p-10 mt-24 rounded-xl">
